@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class ShooterExplosion : IShooter
 {
-    private float _explosionRadius;
-    private float _explosionForce;
-    private float _upwardsModifier = 1;
+    private readonly float _explosionRadius;
+    private readonly float _explosionForce;
+    private readonly float _upwardsModifier = 1;
+    
+    private ParticleSystem _particleSystem;
 
-    public ShooterExplosion(float radius, float force)
+    public ShooterExplosion(float radius, float force, ParticleSystem particleSystem)
     {
         _explosionRadius = radius;
         _explosionForce = force;
+        _particleSystem = particleSystem;
     }
     
     private Camera Camera => Camera.main;
@@ -32,6 +35,8 @@ public class ShooterExplosion : IShooter
             
                     if (rb != null)
                     {
+                        _particleSystem.transform.position = hit.point;
+                        _particleSystem.Play();
                         rb.AddExplosionForce(_explosionForce, hit.point, _explosionRadius, _upwardsModifier, ForceMode.Impulse);
                     }
                 }

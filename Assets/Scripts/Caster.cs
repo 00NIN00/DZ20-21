@@ -4,10 +4,12 @@ public class Caster : MonoBehaviour
 {
     private IShooter _shooter;
     private IInput _input;
+    private ParticleSystem _particleSystem;
 
-    public void Initialize(IInput input)
+    public void Initialize(IInput input, ParticleSystem particleSystem)
     {
         _input = input;
+        _particleSystem = particleSystem;
     }
 
     public void SetShooter(IShooter shooter)
@@ -34,7 +36,7 @@ public class Caster : MonoBehaviour
 
         if (_input.Button2)
         {
-            SetShooter(new ShooterExplosion(7, 3));
+            SetShooter(new ShooterExplosion(7, 3, _particleSystem));
             _shooter.Cast(_input.Position);
         }
     }
