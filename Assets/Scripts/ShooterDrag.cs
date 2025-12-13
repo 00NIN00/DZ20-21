@@ -3,6 +3,7 @@ using UnityEngine;
 public class ShooterDrag : IShooter
 {
     private Transform _target;
+    
     private float _zCoordinate;
     private Camera Camera => Camera.main;
 
@@ -15,6 +16,9 @@ public class ShooterDrag : IShooter
             if (hit.collider.TryGetComponent(out IInteracted _))
             {
                 _target = hit.collider.gameObject.transform;
+                
+                _target.rotation = Quaternion.identity;
+                
                 _zCoordinate = Camera.WorldToScreenPoint(_target.position).z;
             }
         }

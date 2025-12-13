@@ -21,20 +21,20 @@ public class Caster : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetShooter(new ShooterDrag());
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SetShooter(new ShooterExplosion(7, 3));
         }
         if(_input.Button1Hold)
         {
+            SetShooter(new ShooterDrag());
             _shooter.Cast(_input.Position);
         }
 
         if (_input.Button2)
         {
+            SetShooter(new ShooterExplosion(7, 3));
             _shooter.Cast(_input.Position);
         }
     }
