@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InputPC : IInput
@@ -6,15 +7,15 @@ public class InputPC : IInput
     private const int MouseLeft = 1;
     
     public Vector2 Position => Input.mousePosition;
-    public bool Button1 => GetMouseRightInput();
-    public bool ButtonHold => GetMouseRightHoldInput();
+    public bool Button1 => GetMouseInput(MouseRight);
+    public bool ButtonHold => GetMouseHoldInput(MouseRight);
 
-    private bool GetMouseRightInput()
+    private bool GetMouseInput(int typeMouse)
     {
-        return Input.GetMouseButtonDown(MouseRight);
+        return Input.GetMouseButtonDown(typeMouse);
     }
-    private bool GetMouseRightHoldInput()
+    private bool GetMouseHoldInput(int typeMouse)
     {
-        return Input.GetMouseButton(MouseRight);
+        return Input.GetMouseButton(typeMouse);
     }
 }
