@@ -19,14 +19,23 @@ public class Caster : MonoBehaviour
 
     private void Update()
     {
-        /*if (_input.Button1)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SetShooter(new ShooterDrag());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetShooter(new ShooterExplosion(7, 3));
+        }
+        if(_input.Button1Hold)
         {
             _shooter.Cast(_input.Position);
         }
-        else */if(_input.Button1Hold)
+
+        if (_input.Button2)
         {
             _shooter.Cast(_input.Position);
-             //_shooter.Drag(_input.Position);
         }
     }
 }

@@ -7,6 +7,6 @@ public class BootStrap : MonoBehaviour
     private void Awake()
     {
         _caster.Initialize(new InputPC());
-        _caster.SetShooter(new ShooterDrag());
+        _caster.SetShooter(new ShooterExplosion(7f, 3f));
     }
 }

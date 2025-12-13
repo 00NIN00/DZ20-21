@@ -8,7 +8,8 @@ public class InputPC : IInput
     
     public Vector2 Position => Input.mousePosition;
     public bool Button1 => GetMouseInput(MouseRight);
-    public bool ButtonHold => GetMouseHoldInput(MouseRight);
+    public bool Button1Hold => GetMouseHoldInput(MouseRight);
+    public bool Button2 => GetMouseInput(MouseLeft);
 
     private bool GetMouseInput(int typeMouse)
     {
