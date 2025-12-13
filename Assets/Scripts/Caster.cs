@@ -1,29 +1,32 @@
-using System;
 using UnityEngine;
 
 public class Caster : MonoBehaviour
 {
-    private Shooter _shooter;
+    private IShooter _shooter;
     private IInput _input;
 
     public void Initialize(IInput input)
     {
         _input = input;
-        
-        _shooter = new Shooter();
+    }
+
+    public void SetShooter(IShooter shooter)
+    {
+        if (_shooter != shooter)
+            _shooter = shooter;
     }
 
 
     private void Update()
     {
-        if (_input.Button1)
+        /*if (_input.Button1)
         {
             _shooter.Cast(_input.Position);
         }
-
-        if (_input.ButtonHold)
+        else */if(_input.Button1Hold)
         {
-             _shooter.Drag(_input.Position);
+            _shooter.Cast(_input.Position);
+             //_shooter.Drag(_input.Position);
         }
     }
 }
