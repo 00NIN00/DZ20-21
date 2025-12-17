@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IShooter
+namespace _Game.Scripts.Shooter
 {
-    public void Cast(Vector2 position);
+    public interface IShooter
+    {
+        public void Cast(Vector2 position);
+    }
 }

@@ -1,3 +1,4 @@
+using _Game.Scripts.Shooter;
 using UnityEngine;
 
 namespace _Game.Scripts

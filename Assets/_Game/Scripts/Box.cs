@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class Box : MonoBehaviour, IInteracted
+namespace _Game.Scripts
 {
-    public void Interact()
+    public class Box : MonoBehaviour, IInteracted
     {
-        Debug.Log("Box Interact");
+        public void Interact()
+        {}
     }
 }

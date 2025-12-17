@@ -1,43 +1,44 @@
 using UnityEngine;
 
-public class ShooterExplosion : IShooter
+namespace _Game.Scripts.Shooter
 {
-    private readonly float _explosionRadius;
-    private readonly float _explosionForce;
-    private readonly float _upwardsModifier = 1;
-    
-    private ParticleSystem _particleSystem;
-
-    public ShooterExplosion(float radius, float force, ParticleSystem particleSystem)
+    public class ShooterExplosion : IShooter
     {
-        _explosionRadius = radius;
-        _explosionForce = force;
-        _particleSystem = particleSystem;
-    }
+        private readonly float _explosionRadius;
+        private readonly float _explosionForce;
+        private readonly float _upwardsModifier = 1;
     
-    private Camera Camera => Camera.main;
-    
-    public void Cast(Vector2 position)
-    {
-        Ray ray = Camera.ScreenPointToRay(position);
+        private ParticleSystem _particleSystem;
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        public ShooterExplosion(float radius, float force, ParticleSystem particleSystem)
         {
-            Debug.Log(hit.collider.name);
-            
-            if (hit.collider != null)
+            _explosionRadius = radius;
+            _explosionForce = force;
+            _particleSystem = particleSystem;
+        }
+    
+        private Camera Camera => Camera.main;
+    
+        public void Cast(Vector2 position)
+        {
+            Ray ray = Camera.ScreenPointToRay(position);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
-                
-                foreach (Collider nearbyObject in colliders)
+                if (hit.collider != null)
                 {
-                    Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            
-                    if (rb != null)
+                    Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
+                
+                    foreach (Collider nearbyObject in colliders)
                     {
-                        _particleSystem.transform.position = hit.point;
-                        _particleSystem.Play();
-                        rb.AddExplosionForce(_explosionForce, hit.point, _explosionRadius, _upwardsModifier, ForceMode.Impulse);
+                        Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            
+                        if (rb != null)
+                        {
+                            _particleSystem.transform.position = hit.point;
+                            _particleSystem.Play();
+                            rb.AddExplosionForce(_explosionForce, hit.point, _explosionRadius, _upwardsModifier, ForceMode.Impulse);
+                        }
                     }
                 }
             }

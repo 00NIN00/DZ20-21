@@ -27,8 +27,6 @@ namespace _Game.Scripts
 
         private void Switch()
         {
-            Debug.Log("Switch" + _currentCameraIndex);
-            
             _currentCameraIndex += StepIndex;
 
             if (_currentCameraIndex >= _virtualCameras.Length)

@@ -1,4 +1,7 @@
-public interface IInteracted
+namespace _Game.Scripts
 {
-    public void Interact();
+    public interface IInteracted
+    {
+        public void Interact();
+    }
 }
