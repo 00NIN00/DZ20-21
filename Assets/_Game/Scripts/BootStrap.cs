@@ -1,0 +1,21 @@
+using UnityEngine;
+
+namespace _Game.Scripts
+{
+    public class BootStrap : MonoBehaviour
+    {
+        [SerializeField] private Caster _caster;
+        [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] private CameraSwitcher _cameraSwitcher;
+    
+        private void Awake()
+        {
+            IInput input = new InputPC();
+        
+            _caster.Initialize(input, _particleSystem);
+            _caster.SetShooter(new ShooterExplosion(7f, 3f, _particleSystem));
+        
+            _cameraSwitcher.Initialize(input);
+        }
+    }
+}

@@ -1,3 +1,4 @@
+using _Game.Scripts;
 using UnityEngine;
 
 public class Caster : MonoBehaviour
