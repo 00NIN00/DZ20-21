@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Game.Scripts.Shooter
@@ -27,17 +28,19 @@ namespace _Game.Scripts.Shooter
             {
                 if (hit.collider != null)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
+                    _particleSystem.transform.position = hit.point;
+                    _particleSystem.Play();
                     
-                    foreach (Collider nearbyObject in colliders)
+                    
+                    Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
+
+                    foreach (Collider collider in colliders)
                     {
-                        Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            
-                        if (rb != null)
+                        if (collider.TryGetComponent(out IExplosioned explosioned))
                         {
-                            _particleSystem.transform.position = hit.point;
-                            _particleSystem.Play();
-                            rb.AddExplosionForce(_explosionForce, hit.point, _explosionRadius, _upwardsModifier, ForceMode.Impulse);
+                            Vector3 direction = (collider.transform.position - hit.point).normalized;
+                    
+                            explosioned.Explode(direction, _explosionForce);
                         }
                     }
                 }
