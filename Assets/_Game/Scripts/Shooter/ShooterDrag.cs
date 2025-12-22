@@ -2,45 +2,53 @@ using UnityEngine;
 
 namespace _Game.Scripts.Shooter
 {
-    public class ShooterDrag : IShooter
+    public class ShooterDrag
     {
-        private Transform _target;
-    
+        private Vector3 _offset;
         private float _zCoordinate;
+        
+        private IDraggable _draggable;
         private Camera Camera => Camera.main;
-
+    
         public void Cast(Vector2 position)
         {
             Ray ray = Camera.ScreenPointToRay(position);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.TryGetComponent(out IInteracted _))
+                if (hit.collider.TryGetComponent(out IDraggable interacted))
                 {
-                    _target = hit.collider.gameObject.transform;
+                    _draggable = interacted;
+                    
+                    _draggable.StartDrag();
+                    
+                    _zCoordinate = Camera.WorldToScreenPoint(_draggable.Position).z;
                 
-                    _target.rotation = Quaternion.identity;
-                
-                    _zCoordinate = Camera.WorldToScreenPoint(_target.position).z;
+                    _offset = _draggable.Position - GetMouseWorldPosition(position);
                 }
             }
-
-            Drag(position);
         }
-
-        private void Drag(Vector2 position)
+    
+        public void Drag(Vector2 position)
         {
-            if (_target != null)
+            if (_draggable != null)
             {
-                _target.position = GetMouseWorldPosition(position);
+                _draggable.Drag(GetMouseWorldPosition(position) + _offset);
             }
         }
-
+    
         private Vector3 GetMouseWorldPosition(Vector2 screenPosition)
         {
             Vector3 mousePoint = screenPosition;
             mousePoint.z = _zCoordinate;
+        
             return Camera.ScreenToWorldPoint(mousePoint);
+        }
+
+        public void Release()
+        {
+            _draggable?.EndDrag();
+            _draggable = null;
         }
     }
 }

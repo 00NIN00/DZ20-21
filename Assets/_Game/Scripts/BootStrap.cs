@@ -13,8 +13,7 @@ namespace _Game.Scripts
         {
             IInput input = new InputPC();
         
-            _caster.Initialize(input, _particleSystem);
-            _caster.SetShooter(new ShooterExplosion(7f, 3f, _particleSystem));
+            _caster.Initialize(input, new ShooterDrag(), new ShooterExplosion(7f, 3f, _particleSystem));
         
             _cameraSwitcher.Initialize(input);
         }

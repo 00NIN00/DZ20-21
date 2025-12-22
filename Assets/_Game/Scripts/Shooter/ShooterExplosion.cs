@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Game.Scripts.Shooter
 {
-    public class ShooterExplosion : IShooter
+    public class ShooterExplosion
     {
         private readonly float _explosionRadius;
         private readonly float _explosionForce;
