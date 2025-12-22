@@ -28,7 +28,7 @@ namespace _Game.Scripts.Shooter
                 if (hit.collider != null)
                 {
                     Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
-                
+                    
                     foreach (Collider nearbyObject in colliders)
                     {
                         Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();

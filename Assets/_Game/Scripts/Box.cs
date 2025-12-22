@@ -6,15 +6,16 @@ namespace _Game.Scripts
     {
         private Rigidbody _rigidbody;
         public Vector3 Position => transform.position;
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-
         public void StartDrag()
         {
             _rigidbody.isKinematic = true;
+            
             transform.rotation = Quaternion.identity;
         }
 
