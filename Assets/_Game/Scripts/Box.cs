@@ -31,7 +31,13 @@ namespace _Game.Scripts
 
         public void Explode(Vector3 direction, float explosionForce)
         {
+            Debug.Log("Explode" + direction);
             _rigidbody.AddForce(direction * explosionForce, ForceMode.Impulse);
+        }
+
+        public void Explode(float explosionForce, Vector3 position, float explosionRadius, float upwardsModifier)
+        {
+            _rigidbody.AddExplosionForce(explosionForce, position, explosionRadius, upwardsModifier, ForceMode.Impulse);
         }
     }
 }

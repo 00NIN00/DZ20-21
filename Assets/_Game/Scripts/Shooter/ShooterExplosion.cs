@@ -1,15 +1,19 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Game.Scripts.Shooter
 {
     public class ShooterExplosion
     {
+        private const float MinDistance = 0.1f;
+        
         private readonly float _explosionRadius;
         private readonly float _explosionForce;
         private readonly float _upwardsModifier = 1;
     
         private ParticleSystem _particleSystem;
+        
 
         public ShooterExplosion(float radius, float force, ParticleSystem particleSystem)
         {
@@ -31,20 +35,32 @@ namespace _Game.Scripts.Shooter
                     _particleSystem.transform.position = hit.point;
                     _particleSystem.Play();
                     
-                    
                     Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
 
                     foreach (Collider collider in colliders)
                     {
                         if (collider.TryGetComponent(out IExplosioned explosioned))
                         {
-                            Vector3 direction = (collider.transform.position - hit.point).normalized;
-                    
-                            explosioned.Explode(direction, _explosionForce);
+                           //Explosion1(collider, explosioned, hit.point);
+                           Explosion2(explosioned, hit.point);
                         }
                     }
                 }
             }
+        }
+
+        private void Explosion1(Collider collider, IExplosioned explosioned, Vector3 position)
+        {
+            Vector3 objectPosition = collider.transform.position;
+
+            Vector3 directionForce = (objectPosition - position).normalized;
+                            
+            explosioned.Explode(directionForce, _explosionForce);
+        }
+
+        private void Explosion2(IExplosioned explosioned, Vector3 position)
+        {
+            explosioned.Explode(_explosionForce, position, _explosionRadius, _upwardsModifier);
         }
     }
 }
