@@ -8,12 +8,13 @@ namespace _Game.Scripts
         [SerializeField] private Caster _caster;
         [SerializeField] private ParticleSystem _particleSystem;
         [SerializeField] private CameraSwitcher _cameraSwitcher;
+        [SerializeField] private SwitcherExplosion  _switcherExplosion;
     
         private void Awake()
         {
             IInput input = new InputPC();
         
-            _caster.Initialize(input, new Dragger(), new ShooterExplosion(7f, 3f, _particleSystem));
+            _caster.Initialize(input, new Dragger(), new ShooterExplosion(7f, 3f, _particleSystem, _switcherExplosion));
         
             _cameraSwitcher.Initialize(input);
         }

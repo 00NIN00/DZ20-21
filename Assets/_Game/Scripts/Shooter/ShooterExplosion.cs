@@ -9,15 +9,18 @@ namespace _Game.Scripts.Shooter
         private readonly float _explosionRadius;
         private readonly float _explosionForce;
         private readonly float _upwardsModifier = 1;
-    
-        private ParticleSystem _particleSystem;
+        private readonly ParticleSystem _particleSystem;
+        
+        private readonly SwitcherExplosion _switcherExplosion;
+        private TypeExplosion _typeExplosion => _switcherExplosion.TypeExplosion;
         
 
-        public ShooterExplosion(float radius, float force, ParticleSystem particleSystem)
+        public ShooterExplosion(float radius, float force, ParticleSystem particleSystem, SwitcherExplosion  switcherExplosion)
         {
             _explosionRadius = radius;
             _explosionForce = force;
             _particleSystem = particleSystem;
+            _switcherExplosion = switcherExplosion;
         }
     
         private Camera Camera => Camera.main;
@@ -37,28 +40,35 @@ namespace _Game.Scripts.Shooter
 
                     foreach (Collider collider in colliders)
                     {
-                        if (collider.TryGetComponent(out IExplosioned explosioned))
+                        if (collider.TryGetComponent(out IExplodable explodable))
                         {
-                           //Explosion1(collider, explosioned, hit.point);
-                           Explosion2(explosioned, hit.point);
+                            switch (_typeExplosion)
+                            {
+                                case TypeExplosion.DefaultImpulse:
+                                    Explosion1(collider, explodable, hit.point);
+                                    break; 
+                                case TypeExplosion.ExplosionImpulse:
+                                    Explosion2(explodable, hit.point);
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
 
-        private void Explosion1(Collider collider, IExplosioned explosioned, Vector3 position)
+        private void Explosion1(Collider collider, IExplodable explodable, Vector3 position)
         {
             Vector3 objectPosition = collider.transform.position;
 
             Vector3 directionForce = (objectPosition - position).normalized;
                             
-            explosioned.Explode(directionForce, _explosionForce);
+            explodable.Explode(directionForce, _explosionForce);
         }
 
-        private void Explosion2(IExplosioned explosioned, Vector3 position)
+        private void Explosion2(IExplodable explodable, Vector3 position)
         {
-            explosioned.Explode(_explosionForce, position, _explosionRadius, _upwardsModifier);
+            explodable.Explode(_explosionForce, position, _explosionRadius, _upwardsModifier);
         }
     }
 }

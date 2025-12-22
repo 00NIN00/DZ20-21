@@ -764,6 +764,7 @@ MonoBehaviour:
   _caster: {fileID: 1043578872}
   _particleSystem: {fileID: 1780737976}
   _cameraSwitcher: {fileID: 1043578874}
+  _switcherExplosion: {fileID: 1043578875}
 --- !u!4 &872600721
 Transform:
   m_ObjectHideFlags: 0
@@ -864,6 +865,7 @@ GameObject:
   - component: {fileID: 1043578873}
   - component: {fileID: 1043578872}
   - component: {fileID: 1043578874}
+  - component: {fileID: 1043578875}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -913,6 +915,19 @@ MonoBehaviour:
   _virtualCameras:
   - {fileID: 514176214}
   - {fileID: 1070025964}
+--- !u!114 &1043578875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043578871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098aaf963e3d4ba989726789f7291a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _typeExplosion: 0
 --- !u!1001 &1044053235
 PrefabInstance:
   m_ObjectHideFlags: 0

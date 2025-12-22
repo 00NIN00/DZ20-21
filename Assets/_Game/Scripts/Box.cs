@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Game.Scripts
 {
-    public class Box : MonoBehaviour, IDraggable,  IExplosioned
+    public class Box : MonoBehaviour, IDraggable,  IExplodable
     {
         private Rigidbody _rigidbody;
         public Vector3 Position => transform.position;
