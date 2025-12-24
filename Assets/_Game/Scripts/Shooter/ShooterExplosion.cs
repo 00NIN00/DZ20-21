@@ -1,3 +1,5 @@
+using _Game.Scripts;
+using _Game.Scripts.ExplosionStrategy;
 using UnityEngine;
 
 namespace _Game.Scripts.Shooter
@@ -38,37 +40,32 @@ namespace _Game.Scripts.Shooter
                     
                     Collider[] colliders = Physics.OverlapSphere(hit.point, _explosionRadius);
 
+                    IExplosionStrategy strategy = GetStrategy();
+                    
                     foreach (Collider collider in colliders)
                     {
                         if (collider.TryGetComponent(out IExplodable explodable))
                         {
-                            switch (_typeExplosion)
-                            {
-                                case TypeExplosion.DefaultImpulse:
-                                    Explosion1(collider, explodable, hit.point);
-                                    break; 
-                                case TypeExplosion.ExplosionImpulse:
-                                    Explosion2(explodable, hit.point);
-                                    break;
-                            }
+                            strategy.Execute(explodable, hit.point);   
                         }
                     }
                 }
             }
         }
-
-        private void Explosion1(Collider collider, IExplodable explodable, Vector3 position)
+        
+        private IExplosionStrategy GetStrategy()
         {
-            Vector3 objectPosition = collider.transform.position;
-
-            Vector3 directionForce = (objectPosition - position).normalized;
-                            
-            explodable.Explode(directionForce, _explosionForce);
-        }
-
-        private void Explosion2(IExplodable explodable, Vector3 position)
-        {
-            explodable.Explode(_explosionForce, position, _explosionRadius, _upwardsModifier);
+            switch (_typeExplosion)
+            {
+                case TypeExplosion.DefaultImpulse:
+                    return new DefaultImpulseStrategy(_explosionForce);
+                
+                case TypeExplosion.ExplosionImpulse:
+                    return new ExplosionImpulseStrategy(_explosionForce, _explosionRadius, _upwardsModifier);
+                
+                default:
+                    return null;
+            }
         }
     }
 }
