@@ -1,3 +1,4 @@
+using System;
 using _Game.Scripts.Shooter;
 using UnityEngine;
 
@@ -5,8 +6,47 @@ namespace _Game.Scripts
 {
     public class SwitcherExplosion : MonoBehaviour
     {
-        [SerializeField] private TypeExplosion _typeExplosion;
+        private const int Step = 1;
+        
+        private TypeExplosion _currentTypeExplosion;
+        private TypeExplosion[] _allTypeExplosions;
+        private IInput _input;
+        private bool _isChange;
+        private int _index;
 
-        public TypeExplosion TypeExplosion => _typeExplosion;
+        public void Initialize(IInput input)
+        {
+            _input = input;
+
+            _allTypeExplosions = (TypeExplosion[])Enum.GetValues(typeof(TypeExplosion));
+        }
+
+        private void Update()
+        {
+            if (_input.SwitchExplosionType)
+            {
+                Switch();
+                _isChange = true;
+            }
+        }
+
+        private void Switch()
+        {
+            int currentIndex = System.Array.IndexOf(_allTypeExplosions, _currentTypeExplosion);
+            int newIndex = (int)Mathf.Repeat(currentIndex + Step, _allTypeExplosions.Length);
+            _currentTypeExplosion = _allTypeExplosions[newIndex];
+        }
+
+        public bool TryGetTypeExplosion(out TypeExplosion typeExplosion)
+        {
+            typeExplosion = _currentTypeExplosion;
+            
+            if (!_isChange)
+                return false;
+
+            _isChange = false;
+            typeExplosion = _currentTypeExplosion;
+            return true;
+        }
     }
 }

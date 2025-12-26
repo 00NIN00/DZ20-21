@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace _Game.Scripts.ExplosionStrategy
 {
-    public class ExplosionImpulseStrategy : IExplosionStrategy
+    public class ExplosionImpulse : IExplosion
     {
         private readonly float _explosionForce;
         private readonly float _explosionRadius;
         private readonly float _upwardsModifier;
 
-        public ExplosionImpulseStrategy(float explosionForce, float explosionRadius, float upwardsModifier = 1f)
+        public ExplosionImpulse(float explosionForce, float explosionRadius, float upwardsModifier = 1f)
         {
             _explosionForce = explosionForce;
             _explosionRadius = explosionRadius;

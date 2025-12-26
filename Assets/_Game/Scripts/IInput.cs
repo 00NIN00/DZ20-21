@@ -12,5 +12,7 @@ namespace _Game.Scripts
         public bool Button2 { get; }
 
         bool SwitchCamera { get; }
+        
+        bool SwitchExplosionType { get; }
     }
 }

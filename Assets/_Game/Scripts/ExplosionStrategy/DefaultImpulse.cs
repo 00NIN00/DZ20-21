@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace _Game.Scripts.ExplosionStrategy
 {
-    public class DefaultImpulseStrategy : IExplosionStrategy
+    public class DefaultImpulse : IExplosion
     {
         private readonly float _explosionForce;
 
-        public DefaultImpulseStrategy(float explosionForce)
+        public DefaultImpulse(float explosionForce)
         {
             _explosionForce = explosionForce;
         }
