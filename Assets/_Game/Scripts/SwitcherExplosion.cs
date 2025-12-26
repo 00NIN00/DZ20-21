@@ -1,6 +1,6 @@
-using System;
 using _Game.Scripts.Shooter;
 using UnityEngine;
+using System;
 
 namespace _Game.Scripts
 {
@@ -12,7 +12,6 @@ namespace _Game.Scripts
         private TypeExplosion[] _allTypeExplosions;
         private IInput _input;
         private bool _isChange;
-        private int _index;
 
         public void Initialize(IInput input)
         {
@@ -32,8 +31,9 @@ namespace _Game.Scripts
 
         private void Switch()
         {
-            int currentIndex = System.Array.IndexOf(_allTypeExplosions, _currentTypeExplosion);
+            int currentIndex = Array.IndexOf(_allTypeExplosions, _currentTypeExplosion);
             int newIndex = (int)Mathf.Repeat(currentIndex + Step, _allTypeExplosions.Length);
+            
             _currentTypeExplosion = _allTypeExplosions[newIndex];
         }
 
@@ -45,7 +45,6 @@ namespace _Game.Scripts
                 return false;
 
             _isChange = false;
-            typeExplosion = _currentTypeExplosion;
             return true;
         }
     }
